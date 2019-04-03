@@ -32,7 +32,7 @@ export class AuthService {
     );
   }
 
-  // Conection de l'utilisateur (asynchrone)
+  // Conexion de l'utilisateur (asynchrone)
   singnInUser(email: string, password: string){
     return new Promise(
       (resolve, reject)=>{
@@ -49,7 +49,7 @@ export class AuthService {
     )
   }
 
-  // déconnection de l'utilisateur 
+  // déconnexion de l'utilisateur 
   sinOutUser(){
     firebase.auth().signOut();
   }
