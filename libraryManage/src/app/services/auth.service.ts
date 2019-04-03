@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   // Conexion de l'utilisateur (asynchrone)
-  singnInUser(email: string, password: string){
+  signInUser(email: string, password: string){
     return new Promise(
       (resolve, reject)=>{
         firebase.auth().signInWithEmailAndPassword(email, password)
