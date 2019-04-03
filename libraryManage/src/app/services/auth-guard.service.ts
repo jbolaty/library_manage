@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 
 export class AuthGuardService implements CanActivate {
 
-  constructor(private router: Router) { }
+constructor(private router: Router) { }
 
 canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise (
