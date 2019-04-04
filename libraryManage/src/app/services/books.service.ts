@@ -3,6 +3,7 @@ import { Book } from '../models.ts/book.model';
 import { Subject} from 'rxjs/Subject';
 import * as firebase from 'firebase';
 import { reject } from 'q';
+import { promise } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -72,4 +73,31 @@ export class BooksService {
           this.saveBooks();
           this.emitBooks();
       }
+
+      // méthode pour uploader la photo 
+      // elle est asynchrone car elle prend du temps 
+      uploadFile(file: File){
+        return new Promise(
+          (resolve, reject) =>{
+            const almostUniqueFileName = Date.now().toString();
+             // .ref: quand on donne pas d'argument il retourne a la racine du stockage
+            const upload = firebase.storage().ref()
+              .child('images/' + almostUniqueFileName + file.name)
+              .put(file);
+
+              upload.on(firebase.storage.TaskEvent.STATE_CHANGED, // pour réagir aux évènements liés a l'upload 
+                () => {
+                  console.log('chargement ...');
+                },
+                (error) =>{
+                  console.log('Erreur de chargement : ' + error);
+                  reject();
+                },
+                () => {
+                  resolve(upload.snapshot.downloadURL);
+                }
+            );
+        }
+    );
+  }
 }
